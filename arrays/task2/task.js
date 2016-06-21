@@ -33,7 +33,4 @@
         document.querySelector('.result').innerHTML += '<br/>';
     });
 
-
-  // document.querySelector('.result').innerHTML =
-
 })();
