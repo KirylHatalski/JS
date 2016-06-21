@@ -1,56 +1,106 @@
-var space = '&nbsp;&nbsp;&nbsp;&nbsp;',
-    star = '*';
+(function () {
 
-function square() {
-  var str = '';
-  for(var i = 1; i < 100; i++) {
-    if (!(i%10)) {
-      str += '*<br>*';
-    } else if (i <= 10 || i > 90) {
-      str += star + '&nbsp;&nbsp;';
-    } else {
-      str += space;
+    var space = '&nbsp',
+        star = '*';
+
+    function border(root) {
+        var str = '',
+            elem = document.createElement('div');
+        elem.style.lineHeight = '8px';
+        for (var i = 0; i < 10; i++) {
+          str += star;
+        }
+        elem.innerHTML = str;
+        return root.appendChild(elem);
     }
-  }
-  return str;
-}
 
-function firstTriangle() {
-  var str = '';
-  for(var i = 0; i < 100; i++) {
-    if (!(i%10)) {
-      str += '<br>*';
-    } else if (i <= 10) {
-      str += star + '&nbsp;&nbsp;';
-    } else if (!(i%9) && i!=99){
-      str += star + '&nbsp;&nbsp;';
-    } else {
-      str += space;
+    function square() {
+        var root = document.querySelector('.result>div:nth-child(1)');
+        for (var i = 0; i < 10; i++) {
+            border(root);
+        }
     }
-  }
-  return str;
-}
 
-function secondTriangle() {
-  var str = '';
-  for(var i = 0; i < 100; i++) {
+    function firstTriangle() {
+        var root = document.querySelector('.result>div:nth-child(2)');
 
-    // if (!(i%9)) {
-    //   str += '<br>*';
-    // // } else if (!(i%7)) {
-    // //   str += star + '&nbsp;&nbsp;';
-    // } else if (i>90){
-    //   str += star + '&nbsp;&nbsp;';
-    // } else {
-    //   str += space;
-    // }
-  }
-  return str;
-}
 
-//TODO
+        function center(max) {
+            var str = '',
+                elem = document.createElement('div');
+                elem.style.lineHeight = '8px';
+            for (var i = 0; i <= max; i++) {
+                str += star;
+            }
+            elem.innerHTML = str;
+            return root.appendChild(elem);
+        };
 
-document.querySelector('.result div:nth-child(1)').innerHTML = square();
-document.querySelector('.result div:nth-child(2)').innerHTML = firstTriangle();
-document.querySelector('.result div:nth-child(3)').innerHTML = secondTriangle();
-// document.querySelector('.result div:nth-child(4)').innerHTML = (z = x++ + y * 5);
+        for (var i = 0; i < 9; i++) {
+            center(i);
+          }
+
+        border(root);
+    }
+
+    function secondTriangle() {
+        var root = document.querySelector('.result>div:nth-child(3)'),
+            stars = 1;
+
+        function center(max, stars) {
+            var str = '',
+                elem = document.createElement('div');
+                elem.style.lineHeight = '8px',
+                walls = max;
+                for (var i = 0; i < Math.round(walls / 2)+1; i++) {
+                    str += space;
+                }
+                for (var i = 0; i < stars; i++) {
+                    str += star;
+                }
+                elem.innerHTML = str ;
+                return root.appendChild(elem);
+        };
+
+        for(var i = 9; i--;) {
+            center(i, stars++)
+        }
+        border(root);
+    };
+
+    function rhombus() {
+        var root = document.querySelector('.result>div:nth-child(4)'),
+            stars = 1;
+
+        function center(max, stars) {
+            var str = '',
+                elem = document.createElement('div');
+                elem.style.lineHeight = '8px',
+                walls = max;
+                for (var i = 0; i < Math.round(walls / 2)+1; i++) {
+                  str += space + space;
+                }
+                for (var i = 0; i < stars; i++) {
+                  str += star;
+                }
+                elem.innerHTML = str ;
+                return root.appendChild(elem);
+            }
+
+        for (var i = 8; i--;) {
+            center(i, stars++)
+        }
+
+        border(root);
+        stars = 8;
+        for (var i = 0; i < 8; i++) {
+            center(i, stars--);
+        }
+    }
+
+    square();
+    firstTriangle();
+    secondTriangle();
+    rhombus();
+
+})();
